@@ -1,2 +1,2 @@
-# back_end
-後端
+# django_exercise
+練習
