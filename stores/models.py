@@ -2,6 +2,7 @@ from django.db import models
 
 # Create your models here.
 
+
 class Store(models.Model):
 
     name = models.CharField(max_length=20)
@@ -13,7 +14,7 @@ class Store(models.Model):
 
 class MenuItem(models.Model):
 
-    store = models.ForeignKey('Store', on_delete=models.CASCADE,related_name='menu_items')
+    store = models.ForeignKey('Store', on_delete=models.CASCADE, related_name='menu_items')
     name = models.CharField(max_length=20)
     price = models.IntegerField()
 

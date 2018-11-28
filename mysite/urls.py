@@ -17,9 +17,10 @@ from django.contrib import admin
 from django.urls import path
 
 from django.urls import include, path
-
+from stores.views import home, store_list
 
 urlpatterns = [
+    path('store/', store_list, name='store_list'),
     path('admin/', admin.site.urls),
     path('polls/', include('polls.urls')),
     path('', include('stores.urls')),
