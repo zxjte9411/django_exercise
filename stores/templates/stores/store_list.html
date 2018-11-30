@@ -18,7 +18,8 @@
   <div class="container">
     {% for store in stores %}
     <div class="store">
-      <h1><a href="{% url 'stores:store_detail' store.id %}">{{ store.name }}</a></h1>
+      <!-- <h1><a href="{% url 'stores:store_detail' store.id %}">{{ store.name }}</a></h1> -->
+      <h1><a href="{{ store.get_absolute_url }}">{{ store.name }}</a></h1>
       <p>{{ store.notes }}</p>
     </div>
     {% endfor %}
