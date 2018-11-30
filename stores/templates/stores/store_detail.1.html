@@ -7,17 +7,11 @@
 <p>{{ store.notes }}</p>
 <table class="table">
   <thead>
-    <tr>
-      <th>品項</th>
-      <th>單價</th>
-    </tr>
+    <tr><th>品項</th><th>單價</th></tr>
   </thead>
   <tbody>
     {% for item in store.menu_items.all %}
-    <tr>
-      <td>{{ item.name }}</td>
-      <td>{{ item.price }}</td>
-    </tr>
+    <tr><td>{{ item.name }}</td><td>{{ item.price }}</td></tr>
     {% endfor %}
   </tbody>
 </table>

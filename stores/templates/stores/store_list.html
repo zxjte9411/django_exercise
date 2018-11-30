@@ -1,30 +1,12 @@
-<!DOCTYPE html>
-<html>
+{% extends 'stores/base.html' %}
 
-<head>
-  <title>店家列表 | 午餐系統</title>
-  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-</head>
+{% block title %}店家列表 | {{ block.super }}{% endblock title %}
 
-<body>
-  <nav class="navbar navbar-default navbar-static-top" role="navigation">
-    <div class="container">
-      <div class="navbar-header">
-        <a class="navbar-brand" href="{% url 'pages:home' %}">午餐系統</a>
-      </div>
-    </div>
-  </nav>
-
-  <div class="container">
-    {% for store in stores %}
-    <div class="store">
-      <!-- <h1><a href="{% url 'stores:store_detail' store.id %}">{{ store.name }}</a></h1> -->
-      <h1><a href="{{ store.get_absolute_url }}">{{ store.name }}</a></h1>
-      <p>{{ store.notes }}</p>
-    </div>
-    {% endfor %}
-  </div>
-
-</body>
-
-</html>
+{% block content %}
+{% for store in stores %}
+<div class="store">
+  <h2><a href="{{ store.get_absolute_url }}">{{ store.name }}</a></h2>
+  <p>{{ store.notes }}</p>
+</div>
+{% endfor %}
+{% endblock content %}
