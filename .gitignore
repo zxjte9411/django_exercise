@@ -187,4 +187,5 @@ pip-selfcheck.json
 # owo
 .vscode/
 .idea
+my.cnf
 # End of https://www.gitignore.io/api/python,django
