@@ -5,6 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  {% load static %}
+  <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css' %}">
   <title>index</title>
 </head>
 
@@ -16,9 +18,10 @@
         <div class="list-group">
           <a href="#" class="list-group-item list-group-item-action active">Question</a>
           {% if latest_question_list %}
-            {% for question in latest_question_list %}
-              <a href="{% url 'polls:detail' question.id %}" class="list-group-item list-group-item-action">{{ question.question_text }}</a>
-            {% endfor %}
+          {% for question in latest_question_list %}
+          <a href="{% url 'polls:detail' question.id %}" class="list-group-item list-group-item-action">
+            {{ question.question_text }}</a>
+          {% endfor %}
           {% else %}
           <p>No polls are available.</p>
           {% endif %}
