@@ -1,7 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.http import Http404
 from .models import Store
-
+from django.forms.models import modelform_factory
 
 def store_list(request):
     stores = Store.objects.all()
@@ -14,3 +14,31 @@ def store_detail(request, pk):
     except Store.DoesNotExist:
         raise Http404
     return render(request, 'stores/store_detail.html', {'store': store})
+
+def store_create(request):
+    StoreForm = modelform_factory(Store, fields=('name', 'notes',))
+    if request.method == 'POST':
+        form = StoreForm(request.POST)
+        if form.is_valid():
+            store = form.save()
+            return redirect(store.get_absolute_url())
+    else:
+        form = StoreForm()
+    return render(request, 'stores/store_create.html', {'form': form})
+
+def store_update(request, pk):
+    try:
+        store = Store.objects.get(pk=pk)
+    except Store.DoesNotExist:
+        raise Http404
+    StoreForm = modelform_factory(Store, fields=('name', 'notes'))
+    if request.method == 'POST':
+        form = StoreForm(request.POST, instance=store)
+        if form.is_valid():
+            store = form.save()
+            return redirect(store.get_absolute_url())
+    else:
+        form = StoreForm(instance=store)
+    return render(request, 'stores/store_update.html', {
+        'form': form, 'store': store,
+    })
