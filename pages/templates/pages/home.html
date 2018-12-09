@@ -2,5 +2,8 @@
 
 {% block body %}
 {{ block.super }}
+{% if user.is_authenticated %}
+<h1>{{ user }}</h1>
+{% endif %}
 {% endblock body %}
 
