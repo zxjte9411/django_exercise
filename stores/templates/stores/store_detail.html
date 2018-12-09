@@ -1,6 +1,7 @@
 {% extends 'stores/base.html' %}
 {% load stores_tags %}
 {% block title %}{{ store.name }} | {{ block.super }}{% endblock title %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 <h1>{{ store.name }}</h1>
@@ -29,4 +30,7 @@
   <button type="submit" class="btn btn-danger">刪除</button>
   {% endif %}
 </form>
+{% if user.is_authenticated %}
+{% crispy event_form %}
+{% endif %}
 {% endblock content %}

@@ -8,6 +8,8 @@ from django.http import HttpResponse
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
 # from django.forms.models import modelform_factory
+from events.forms import EventForm
+
 
 def store_list(request):
     stores = Store.objects.all()
@@ -19,7 +21,15 @@ def store_detail(request, pk):
         store = Store.objects.get(pk=pk)
     except Store.DoesNotExist:
         raise Http404
-    return render(request, 'stores/store_detail.html', {'store': store})
+    # 我們在初始化 EventForm 時用了一個新參數 initial，在 form 出現之前先為某個欄位指定初始值。
+    # 因為我們要把這個 form post 到 EventCreateView，所以必須用 helper 的 form_action 參數自訂 HTML form tag
+    # 中的 action attribute（預設會被 post 到目前的 URL）。
+    event_form = EventForm(initial={'store': store}, submit_title='建立活動')
+    event_form.helper.form_action = reverse('events:event_create')
+    return render(request, 'stores/store_detail.html', {
+        'store': store, 'event_form': event_form,
+    })
+
 
 def store_create(request):
     # StoreForm = modelform_factory(Store, fields=('name', 'notes',))
@@ -36,6 +46,7 @@ def store_create(request):
         form = StoreForm(submit_title='建立')
     return render(request, 'stores/store_create.html', {'form': form})
 
+
 def store_update(request, pk):
     try:
         store = Store.objects.get(pk=pk)
@@ -51,7 +62,8 @@ def store_update(request, pk):
     else:
         # form = StoreForm(instance=store)
         form = StoreForm(instance=store, submit_title='更新')
-    return render(request, 'stores/store_update.html', {'form': form, 'store': store,})
+    return render(request, 'stores/store_update.html', {'form': form, 'store': store, })
+
 
 @login_required
 @require_http_methods(['POST', 'DELETE'])
@@ -67,7 +79,7 @@ def store_delete(request, pk):
     if store.can_user_delete(request.user):
         store.delete()
         if request.is_ajax():
-            
+
             return HttpResponse()
         return redirect(reverse('stores:store_list'))
     return HttpResponseForbidden()
