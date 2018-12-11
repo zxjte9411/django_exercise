@@ -1,15 +1,15 @@
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django.http import Http404
-from .models import Store
-from .forms import StoreForm
 from django.http import HttpResponseForbidden
 from django.http import HttpResponse
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
 # from django.forms.models import modelform_factory
-from events.forms import EventForm
 
+from .models import Store
+from .forms import StoreForm
+from events.forms import EventForm
 
 def store_list(request):
     stores = Store.objects.all()
