@@ -4,7 +4,7 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<h1>{{ store.name }}</h1>
+<h1 class="mt-3">{{ store.name }}</h1>
 <p>{{ store.notes }}</p>
 <table class="table">
   <thead>
@@ -22,15 +22,18 @@
     {% endfor %}
   </tbody>
 </table>
-<a href="{% url 'stores:store_update' pk=store.pk %}" class="btn btn-default">更新店家資訊</a>
-
-<form method="post" action="{% url 'stores:store_delete' store.pk %}">
-  {% csrf_token %}
-  {% if store|deletable:user %}
-  <button type="submit" class="btn btn-danger">刪除</button>
+<div class="d-flex flex-row">
+  <div>
+    <a class="btn btn-success" href="{% url 'stores:store_update' pk=store.pk %}" role="button">更新店家資訊</a>
+  </div>
+  <form method="post" action="{% url 'stores:store_delete' store.pk %}">
+    {% csrf_token %}
+    {% if store|deletable:user %}
+    <button type="submit" class="btn btn-danger mx-2">刪除</button>
+    {% endif %}
+  </form>
+  {% if user.is_authenticated %}
+  {% crispy event_form %}
   {% endif %}
-</form>
-{% if user.is_authenticated %}
-{% crispy event_form %}
-{% endif %}
-{% endblock content %}
+  {% endblock content %}
+</div>
