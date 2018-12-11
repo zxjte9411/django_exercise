@@ -1,13 +1,29 @@
 {% extends 'stores/base.html' %}
 {% load crispy_forms_tags %}
+{% load staticfiles %}
 
 {% block title %}更新 {{ store.name }} | {{ block.super }}{% endblock title %}
 
 {% block content %}
-<form action="" method="post" role="form">
+<form method="post">
   {% csrf_token %}
-  {{ form|crispy }}
-  <!-- {{ form.as_p }} -->
+  {% crispy form %}
+
+  <!-- 手動一個一個產生 formset 中的 forms，並在它們外面包一層 div -->
+  {{ menu_item_formset.management_form }}
+  {% for form in menu_item_formset %}
+  <div class="menu-item form-group">
+    {% crispy form menu_item_formset.helper %}
+  </div>
+  {% endfor %}
+
+  <a href="#" class="menu-item-add btn btn-primary">新增菜單項目</a>
   <button type="submit" class="btn btn-primary">更新</button>
 </form>
 {% endblock content %}
+
+<!-- 加上這個 block -->
+{% block js %}
+{{ block.super }}
+<script src="{% static 'stores/js/store_update.js' %}"></script>
+{% endblock js %}

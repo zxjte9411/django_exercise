@@ -9,7 +9,7 @@
     {% for store in stores %}
     <div class="store mt-3">
       {% if store|deletable:user %}
-      <button data-href="{% url 'stores:store_delete' store.pk %}" class="btn btn-danger float-right btn-sm">刪除</button>
+      <button data-href="{% url 'stores:store_delete' store.pk %}" class="btn btn-danger btn-delete float-right btn-sm">刪除</button>
       {% endif %}
       <h2><a href="{{ store.get_absolute_url }}">{{ store.name }}</a></h2>
       <p>{{ store.notes }}</p>
